@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,18 +22,31 @@ public class ContentManager
 
     public void Draw()
     {
-        DrawPlayer1();
+        DrawSpriteBatch(SpriteBatch);
     }
 
     public void LoadContent()
     {
         var Player = Game.Player;
-        Player.Texture2D = Game.Content.Load<Texture2D>(Player.Texture2DName);
+        Game.Player.Texture2D = Game.Content.Load<Texture2D>(Game.Player.Texture2DName);
+       Game.Level.BackgroundTexture2D = Game.Content.Load<Texture2D>(Game.Level.BackgroundTexture2DName);
     }
 
-    public void DrawPlayer1()
+    private void DrawSpriteBatch(SpriteBatch SpriteBatch)
     {
         SpriteBatch.Begin();
+        DrawBackground(SpriteBatch);
+        DrawPlayer1(SpriteBatch);
+        SpriteBatch.End();
+    }
+
+    private void DrawBackground(SpriteBatch spriteBatch)
+    {
+        SpriteBatch.Draw(Game.Level.BackgroundTexture2D, Game.ScreenRectangle,Color.White);
+    }
+
+    private void DrawPlayer1(SpriteBatch SpriteBatch)
+    {
         SpriteBatch.Draw(Game.Player.Texture2D, Game.Player.Position, null,
             Game.Player.Color,
             0f,
@@ -41,7 +55,6 @@ public class ContentManager
             SpriteEffects.None,
             0f
         );
-        SpriteBatch.End();
     }
 }
 

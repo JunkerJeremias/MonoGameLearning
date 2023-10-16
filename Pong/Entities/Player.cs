@@ -23,8 +23,8 @@ public class Player : Entity
         {
             Position = position;
             Speed = 100f;
-            Color = Color.AliceBlue;
-            Texture2DName = "textures/ball";
+            Color = Color.White;
+            Texture2DName = "textures/shuttle";
         }
     }
 
