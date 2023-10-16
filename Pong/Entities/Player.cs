@@ -24,7 +24,7 @@ public class Player : Entity
             Position = position;
             Speed = 100f;
             Color = Color.AliceBlue;
-            Texture2DName = "ball";
+            Texture2DName = "textures/ball";
         }
     }
 
