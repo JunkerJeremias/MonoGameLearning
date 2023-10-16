@@ -21,6 +21,17 @@ public class ContentManager
 
     public void Draw()
     {
+        DrawPlayer1();
+    }
+
+    public void LoadContent()
+    {
+        var Player = Game.Player;
+        Player.Texture2D = Game.Content.Load<Texture2D>(Player.Texture2DName);
+    }
+
+    public void DrawPlayer1()
+    {
         SpriteBatch.Begin();
         SpriteBatch.Draw(Game.Player.Texture2D, Game.Player.Position, null,
             Game.Player.Color,
@@ -32,12 +43,5 @@ public class ContentManager
         );
         SpriteBatch.End();
     }
-
-    public void LoadContent()
-    {
-        var Player = Game.Player;
-        Player.Texture2D = Game.Content.Load<Texture2D>(Player.Texture2DName);
-    }
-
 }
 
