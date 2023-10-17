@@ -20,6 +20,7 @@ public class Game1 : Game
     public int? ScreenWidth => _graphics?.PreferredBackBufferWidth;
     public int? ScreenHeight => _graphics?.PreferredBackBufferHeight;
 
+
     public Rectangle ScreenRectangle => new Rectangle(0, 0, ScreenWidth?? 0, ScreenHeight?? 0);
     public MainMenu Menu { get; }
 
