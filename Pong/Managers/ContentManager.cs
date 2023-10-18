@@ -15,19 +15,33 @@ public class ContentManager
     private Game1 Game;
     public SpriteBatch SpriteBatchGame { get; set; }
     public SpriteBatch SpriteBatchHUD { get; set; }
+    public SpriteBatch SpriteBatchAdditiveBlending { get; set; }
 
+    public AdditiveBlending AdditiveBlending { get; set; }
 
     public ContentManager(Game1 game)
     {
         Game = game;
         SpriteBatchGame = new SpriteBatch(Game.GraphicsDevice);
         SpriteBatchHUD = new SpriteBatch(Game.GraphicsDevice);
+        SpriteBatchAdditiveBlending = new SpriteBatch(Game.GraphicsDevice);
+
+        AdditiveBlending = new(Game.Content);
     }
 
     public void Draw()
     {
         DrawSpriteBatchGame();
+        DrawAdditiveSpriteBatch();
         DrawSpriteBatchHUD();
+    }
+
+    private void DrawAdditiveSpriteBatch()
+    {
+        SpriteBatchAdditiveBlending.Begin(SpriteSortMode.Immediate,BlendState.Additive );
+        AdditiveBlending.Draw(SpriteBatchAdditiveBlending);
+        SpriteBatchAdditiveBlending.End();
+
     }
 
     private void DrawSpriteBatchHUD()
@@ -90,6 +104,7 @@ public class ContentManager
     public void Update(TimeSpan ElapsedTime)
     {
         HUD.Score = ElapsedTime.Seconds + ElapsedTime.Minutes * 60 + ElapsedTime.Hours * 360;
+        AdditiveBlending.UpdateAngles();
         Game.Player.AnimatedSprite.Update();
     }
 }
