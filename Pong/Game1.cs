@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
@@ -19,6 +20,8 @@ public class Game1 : Game
     public LevelBase Level { get; set; }
     public int? ScreenWidth => _graphics?.PreferredBackBufferWidth;
     public int? ScreenHeight => _graphics?.PreferredBackBufferHeight;
+    public TimeSpan ElapsedTime { get; private set; }
+    
 
 
     public Rectangle ScreenRectangle => new Rectangle(0, 0, ScreenWidth?? 0, ScreenHeight?? 0);
@@ -60,10 +63,18 @@ public class Game1 : Game
         
         // TODO: Add your update logic here
         _inputManager.ParseInput(gameTime);
-        
+        UpdateGameTime(gameTime);
+
+        _content.Update(ElapsedTime);
 
         base.Update(gameTime);
         
+    }
+
+    private void UpdateGameTime(GameTime gameTime)
+    {
+        if (!Menu.Pause)
+            ElapsedTime += gameTime.ElapsedGameTime;
     }
 
     protected override void Draw(GameTime gameTime)

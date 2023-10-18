@@ -6,43 +6,69 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Pong.Menus;
 
 namespace Pong.Managers;
 public class ContentManager
 {
     private Game1 Game;
-    public SpriteBatch SpriteBatch { get; set; }
+    public SpriteBatch SpriteBatchGame { get; set; }
+    public SpriteBatch SpriteBatchHUD { get; set; }
 
 
     public ContentManager(Game1 game)
     {
         Game = game;
-        SpriteBatch = new SpriteBatch(Game.GraphicsDevice);
+        SpriteBatchGame = new SpriteBatch(Game.GraphicsDevice);
+        SpriteBatchHUD = new SpriteBatch(Game.GraphicsDevice);
     }
 
     public void Draw()
     {
-        DrawSpriteBatch(SpriteBatch);
+        DrawSpriteBatchGame();
+        DrawSpriteBatchHUD();
+    }
+
+    private void DrawSpriteBatchHUD()
+    {
+        SpriteBatchHUD.Begin();
+        DrawScore();
+        DrawPauseMenu();
+        SpriteBatchHUD.End();
+    }
+
+    private void DrawPauseMenu()
+    {
+        if (Game.Menu.Pause)
+        {
+            SpriteBatchHUD.DrawString(HUD.Font, HUD.PauseDisplayText, HUD.PausePosition, HUD.FontColor);
+
+        }
+    }
+
+    private void DrawScore()
+    {
+        SpriteBatchHUD.DrawString(HUD.Font, HUD.ScoreDisplayText + ": " + HUD.Score.ToString(), HUD.ScorePosition, HUD.FontColor);
     }
 
     public void LoadContent()
     {
-        var Player = Game.Player;
         Game.Player.Texture2D = Game.Content.Load<Texture2D>(Game.Player.Texture2DName);
-       Game.Level.BackgroundTexture2D = Game.Content.Load<Texture2D>(Game.Level.BackgroundTexture2DName);
+        Game.Level.BackgroundTexture2D = Game.Content.Load<Texture2D>(Game.Level.BackgroundTexture2DName);
+        HUD.Font = Game.Content.Load<SpriteFont>(HUD.FontName);
     }
 
-    private void DrawSpriteBatch(SpriteBatch SpriteBatch)
+    private void DrawSpriteBatchGame()
     {
-        SpriteBatch.Begin();
-        DrawBackground(SpriteBatch);
-        DrawPlayer1(SpriteBatch);
-        SpriteBatch.End();
+        SpriteBatchGame.Begin();
+        DrawBackground(SpriteBatchGame);
+        DrawPlayer1(SpriteBatchGame);
+        SpriteBatchGame.End();
     }
 
     private void DrawBackground(SpriteBatch spriteBatch)
     {
-        SpriteBatch.Draw(Game.Level.BackgroundTexture2D, Game.ScreenRectangle,Color.White);
+        SpriteBatchGame.Draw(Game.Level.BackgroundTexture2D, Game.ScreenRectangle,Color.White);
     }
 
     private void DrawPlayer1(SpriteBatch SpriteBatch)
@@ -55,6 +81,11 @@ public class ContentManager
             SpriteEffects.None,
             0f
         );
+    }
+
+    public void Update(TimeSpan ElapsedTime)
+    {
+        HUD.Score = ElapsedTime.Seconds + ElapsedTime.Minutes * 60 + ElapsedTime.Hours * 360;
     }
 }
 
