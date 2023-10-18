@@ -12,7 +12,7 @@ namespace Pong.Menus
     public static class HUD
     {
         public static SpriteFont Font { get; set; }
-        public static string FontName { get; set; } = "HUDFont";
+        public static string FontName { get; set; } = "SpriteFonts/HUDFont";
         public static string ScoreDisplayText { get; } = "Score";
         public static string PauseDisplayText { get; } = "Pause";
         public static Vector2 ScorePosition { get; set; } = new Vector2(10,10);

@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Pong.Entities;
 
-public class Player : Entity
+public class Player : AnimatedEntity
 {
     public new Vector2 Origin
     {
@@ -24,7 +24,8 @@ public class Player : Entity
             Position = position;
             Speed = 100f;
             Color = Color.White;
-            Texture2DName = "textures/shuttle";
-        }
+            Texture2DName = "textureatlas/smileywalk";
+            //Texture2DName = "textures/shuttle";
     }
+}
 

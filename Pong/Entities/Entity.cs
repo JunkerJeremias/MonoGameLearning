@@ -14,8 +14,8 @@ public abstract class Entity
     public Texture2D Texture2D { get; set; }
     public Vector2 Origin { get; }
     
-    public int? Height => Texture2D?.Height;
-    public int? Width => Texture2D?.Width;
+    public int? Height => Texture2D?.Height/4;
+    public int? Width => Texture2D?.Width/4;
 
     public string Texture2DName { get; set; }
     public Color Color { get; set; }

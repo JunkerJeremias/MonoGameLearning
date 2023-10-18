@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Pong.Animation;
 using Pong.Menus;
 
 namespace Pong.Managers;
@@ -54,6 +55,7 @@ public class ContentManager
     public void LoadContent()
     {
         Game.Player.Texture2D = Game.Content.Load<Texture2D>(Game.Player.Texture2DName);
+        Game.Player.AnimatedSprite = new AnimatedSprite(Game.Player.Texture2D, 4, 4);
         Game.Level.BackgroundTexture2D = Game.Content.Load<Texture2D>(Game.Level.BackgroundTexture2DName);
         HUD.Font = Game.Content.Load<SpriteFont>(HUD.FontName);
     }
@@ -73,19 +75,22 @@ public class ContentManager
 
     private void DrawPlayer1(SpriteBatch SpriteBatch)
     {
-        SpriteBatch.Draw(Game.Player.Texture2D, Game.Player.Position, null,
-            Game.Player.Color,
-            0f,
-            Game.Player.Origin,
-            Vector2.One,
-            SpriteEffects.None,
-            0f
-        );
+        //SpriteBatch.Draw(Game.Player.Texture2D, Game.Player.Position, null,
+        //    Game.Player.Color,
+        //    0f,
+        //    Game.Player.Origin,
+        //    Vector2.One,
+        //    SpriteEffects.None,
+        //    0f
+        //); 
+        Game.Player.AnimatedSprite.Draw(SpriteBatch,Game.Player.Position, Game.Player.Origin);
+        
     }
 
     public void Update(TimeSpan ElapsedTime)
     {
         HUD.Score = ElapsedTime.Seconds + ElapsedTime.Minutes * 60 + ElapsedTime.Hours * 360;
+        Game.Player.AnimatedSprite.Update();
     }
 }
 
