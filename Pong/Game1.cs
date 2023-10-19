@@ -63,18 +63,20 @@ public class Game1 : Game
         
         // TODO: Add your update logic here
         _inputManager.ParseInput(gameTime);
-        UpdateGameTime(gameTime);
 
-        _content.Update(ElapsedTime);
+        if (!Menu.Pause)
+        {
+            UpdateGameTime(gameTime);
 
+            _content.Update(ElapsedTime);
+        }
         base.Update(gameTime);
         
     }
 
     private void UpdateGameTime(GameTime gameTime)
     {
-        if (!Menu.Pause)
-            ElapsedTime += gameTime.ElapsedGameTime;
+        ElapsedTime += gameTime.ElapsedGameTime;
     }
 
     protected override void Draw(GameTime gameTime)

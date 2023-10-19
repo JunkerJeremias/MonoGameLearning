@@ -50,25 +50,30 @@ internal class InputManager
         if (kstate.IsKeyDown(Keys.Up))
         {
             player.Position = new Vector2(player.Position.X, player.Position.Y - player.Speed * elapsedTime);
-            player.Speed += 1;
+            //player.Speed += 1;
+            player.Rotation = 90;
         }
 
         if (kstate.IsKeyDown(Keys.Down))
         {
             player.Position = new Vector2(player.Position.X, player.Position.Y + player.Speed * elapsedTime);
-            player.Speed += 1;
+            //player.Speed += 1;
+            player.Rotation = 270;
+
         }
 
         if (kstate.IsKeyDown(Keys.Left))
         {
             player.Position = new Vector2(player.Position.X - player.Speed * elapsedTime, player.Position.Y);
-            player.Speed += 1;
+            //player.Speed += 1;
+            player.Rotation = 0;
         }
 
         if (kstate.IsKeyDown(Keys.Right))
         {
             player.Position = new Vector2(player.Position.X + player.Speed * elapsedTime, player.Position.Y);
-            player.Speed += 1;
+            //player.Speed += 1;
+            player.Rotation = 180;
         }
 
         if (kstate.IsKeyDown(Keys.Space))

@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Pong.Animation;
+using Pong.Entities;
+using Pong.Entities.Particles;
 using Pong.Menus;
 
 namespace Pong.Managers;
@@ -70,6 +72,7 @@ public class ContentManager
     {
         Game.Player.Texture2D = Game.Content.Load<Texture2D>(Game.Player.Texture2DName);
         Game.Player.AnimatedSprite = new AnimatedSprite(Game.Player.Texture2D, 4, 4);
+        Game.Player.ParticleSystem = ParticleSystemBuilder.MakeParticleSetStars(Game.Content, Game.Player.Position);
         Game.Level.BackgroundTexture2D = Game.Content.Load<Texture2D>(Game.Level.BackgroundTexture2DName);
         HUD.Font = Game.Content.Load<SpriteFont>(HUD.FontName);
     }
@@ -89,16 +92,8 @@ public class ContentManager
 
     private void DrawPlayer1(SpriteBatch SpriteBatch)
     {
-        //SpriteBatch.Draw(Game.Player.Texture2D, Game.Player.Position, null,
-        //    Game.Player.Color,
-        //    0f,
-        //    Game.Player.Origin,
-        //    Vector2.One,
-        //    SpriteEffects.None,
-        //    0f
-        //); 
         Game.Player.AnimatedSprite.Draw(SpriteBatch,Game.Player.Position, Game.Player.Origin);
-        
+        Game.Player.ParticleSystem.Draw(SpriteBatch);   
     }
 
     public void Update(TimeSpan ElapsedTime)
@@ -106,6 +101,7 @@ public class ContentManager
         HUD.Score = ElapsedTime.Seconds + ElapsedTime.Minutes * 60 + ElapsedTime.Hours * 360;
         AdditiveBlending.UpdateAngles();
         Game.Player.AnimatedSprite.Update();
+        Game.Player.ParticleSystem.Update(Game.Player.Position, Game.Player.Rotation);
     }
 }
 
