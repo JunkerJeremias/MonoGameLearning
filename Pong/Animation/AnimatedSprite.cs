@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Pong.Entities;
 
 namespace Pong.Animation
 {
@@ -31,7 +32,7 @@ namespace Pong.Animation
                 _currentFrame = 0;
         }
 
-        public void Draw(SpriteBatch spriteBatch, Vector2 location, Vector2 origin)
+        public void Draw(SpriteBatch spriteBatch, Player player)
         {
             int width = Texture.Width / Columns;
             int height = Texture.Height / Rows;
@@ -39,13 +40,13 @@ namespace Pong.Animation
             int column = _currentFrame % Columns;
 
             Rectangle sourceRectangle = new Rectangle(width * column, height * row, width, height);
-            Rectangle destinationRectangle = new Rectangle((int)location.X, (int)location.Y, width, height);
+            Rectangle destinationRectangle = new Rectangle((int)player.Position.X, (int)player.Position.Y, width, height);
             
             //spriteBatch.Draw(Texture, destinationRectangle, sourceRectangle, Color.White);
-            spriteBatch.Draw(Texture, location, sourceRectangle,
+            spriteBatch.Draw(Texture, player.Position, sourceRectangle,
                 Color.White,
-                0f,
-                origin,
+                (float)Math.PI * player.Rotation / 180.0f,
+                player.Origin,
                 Vector2.One,
                 SpriteEffects.None,
                 0f

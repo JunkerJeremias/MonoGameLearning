@@ -31,7 +31,7 @@ namespace Pong.Entities.Particles
                     speed * (float)(_random.NextDouble() * 2),
                     speed * (float)(_random.NextDouble() * 2)
             );
-            rotation = ((rotation - 45) % 360);
+            rotation = ((rotation + 45) % 360);
             double angle = Math.PI * rotation / 180.0;
             float cos = (float)Math.Cos(angle);
             float sin = (float)Math.Sin(angle);

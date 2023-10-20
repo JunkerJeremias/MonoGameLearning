@@ -41,7 +41,8 @@ public class ContentManager
     private void DrawAdditiveSpriteBatch()
     {
         SpriteBatchAdditiveBlending.Begin(SpriteSortMode.Immediate,BlendState.Additive );
-        AdditiveBlending.Draw(SpriteBatchAdditiveBlending);
+        //AdditiveBlending.Draw(SpriteBatchAdditiveBlending);
+        Game.Player.ParticleSystem.Draw(SpriteBatchAdditiveBlending);
         SpriteBatchAdditiveBlending.End();
 
     }
@@ -92,8 +93,8 @@ public class ContentManager
 
     private void DrawPlayer1(SpriteBatch SpriteBatch)
     {
-        Game.Player.AnimatedSprite.Draw(SpriteBatch,Game.Player.Position, Game.Player.Origin);
-        Game.Player.ParticleSystem.Draw(SpriteBatch);   
+        Game.Player.AnimatedSprite.Draw(SpriteBatch, Game.Player);
+        
     }
 
     public void Update(TimeSpan ElapsedTime)

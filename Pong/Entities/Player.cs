@@ -27,7 +27,7 @@ public class Player : AnimatedEntity
         public Player(Vector2 position)
         {
             Position = position;
-            Speed = 100f;
+            Speed = 200f;
             Color = Color.White;
             Texture2DName = "textureatlas/smileywalk";
             Rotation = 0;
