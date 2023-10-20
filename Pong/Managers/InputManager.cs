@@ -49,26 +49,49 @@ internal class InputManager
 
         if (kstate.IsKeyDown(Keys.Up))
         {
-            player.Position = new Vector2(player.Position.X, player.Position.Y - player.Speed * elapsedTime);
-            player.Speed += 1;
+            int rotation = ((player.Rotation) % 360);
+            double angle = Math.PI * rotation / 180.0;
+            float cos = (float)Math.Cos(angle);
+            float sin = (float)Math.Sin(angle);
+            //rotate by x degrees
+            Vector2 velocity = new (0, - player.Speed * elapsedTime);
+
+            velocity = new(- sin * velocity.Y,
+                cos * velocity.Y
+            );
+
+            player.Position += velocity;
         }
 
         if (kstate.IsKeyDown(Keys.Down))
         {
-            player.Position = new Vector2(player.Position.X, player.Position.Y + player.Speed * elapsedTime);
-            player.Speed += 1;
+            int rotation = ((player.Rotation) % 360);
+            double angle = Math.PI * rotation / 180.0;
+            float cos = (float)Math.Cos(angle);
+            float sin = (float)Math.Sin(angle);
+            //rotate by x degrees
+            Vector2 velocity = new(0, player.Speed * elapsedTime);
+
+            velocity = new(-sin * velocity.Y,
+                cos * velocity.Y
+            );
+
+            player.Position += velocity;
+
         }
 
         if (kstate.IsKeyDown(Keys.Left))
         {
-            player.Position = new Vector2(player.Position.X - player.Speed * elapsedTime, player.Position.Y);
-            player.Speed += 1;
+            //player.Position = new Vector2(player.Position.X - player.Speed * elapsedTime, player.Position.Y);
+            //player.Speed += 1;
+            player.Rotation -= 3;
         }
 
         if (kstate.IsKeyDown(Keys.Right))
         {
-            player.Position = new Vector2(player.Position.X + player.Speed * elapsedTime, player.Position.Y);
-            player.Speed += 1;
+            //player.Position = new Vector2(player.Position.X + player.Speed * elapsedTime, player.Position.Y);
+            //player.Speed += 1;
+            player.Rotation += 3;
         }
 
         if (kstate.IsKeyDown(Keys.Space))
