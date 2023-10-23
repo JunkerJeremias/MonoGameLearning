@@ -33,7 +33,7 @@ internal class InputManager
     {
         HandleEscapeInput();
 
-        if (PausePressed)
+        if (_game.Menu.Pause)
             return;
 
         HandlePlayerInput(gameTime);

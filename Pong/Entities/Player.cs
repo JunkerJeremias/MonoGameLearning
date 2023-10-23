@@ -12,26 +12,23 @@ namespace Pong.Entities;
 
 public class Player : AnimatedEntity
 {
-    public new Vector2 Origin
-    {
-        get { return new Vector2((float)(Width / 2), (float)(Height / 2)); }
-    }
-
     //rotation in degrees
-    public int Rotation { get; set; }
     public ParticleSystem ParticleSystem { get; set; }
 
     public Player() : this(new Vector2(0,0) ) 
         {}
 
-        public Player(Vector2 position)
+        public Player(Vector2 position) :base(position, "textureatlas/smileywalk")
         {
-            Position = position;
             Speed = 200f;
-            Color = Color.White;
-            Texture2DName = "textureatlas/smileywalk";
-            Rotation = 0;
             //Texture2DName = "textures/shuttle";
+            //BoundingCircle = new(Position, (float)Width / 2f);
+        }
+
+        public override void Draw(SpriteBatch SpriteBatch)
+        {
+            AnimatedSprite.Draw(SpriteBatch, this);
+
         }
 }
 

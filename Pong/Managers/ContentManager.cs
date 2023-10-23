@@ -2,7 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.Contracts;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
@@ -73,7 +75,14 @@ public class ContentManager
     {
         Game.Player.Texture2D = Game.Content.Load<Texture2D>(Game.Player.Texture2DName);
         Game.Player.AnimatedSprite = new AnimatedSprite(Game.Player.Texture2D, 4, 4);
+        Game.Player.BoundingCircle = new(Game.Player.Position + Game.Player.Origin, (float)Game.Player.Width / 2f);
         Game.Player.ParticleSystem = ParticleSystemBuilder.MakeParticleSetStars(Game.Content, Game.Player.Position);
+
+        foreach (var entity in Game.Entities)
+        {
+            entity.Texture2D = Game.Content.Load<Texture2D>(entity.Texture2DName);
+            entity.BoundingCircle = new(entity.Position + entity.Origin, (float)entity.Width / 2f);
+        }
         Game.Level.BackgroundTexture2D = Game.Content.Load<Texture2D>(Game.Level.BackgroundTexture2DName);
         HUD.Font = Game.Content.Load<SpriteFont>(HUD.FontName);
     }
@@ -82,7 +91,7 @@ public class ContentManager
     {
         SpriteBatchGame.Begin();
         DrawBackground(SpriteBatchGame);
-        DrawPlayer1(SpriteBatchGame);
+        DrawEntities(SpriteBatchGame);
         SpriteBatchGame.End();
     }
 
@@ -91,10 +100,13 @@ public class ContentManager
         SpriteBatchGame.Draw(Game.Level.BackgroundTexture2D, Game.ScreenRectangle,Color.White);
     }
 
-    private void DrawPlayer1(SpriteBatch SpriteBatch)
+    private void DrawEntities(SpriteBatch SpriteBatch)
     {
-        Game.Player.AnimatedSprite.Draw(SpriteBatch, Game.Player);
-        
+        Game.Player.Draw(SpriteBatch);
+        foreach (var entity in Game.Entities)
+        {
+            entity.Draw(SpriteBatch);
+        }
     }
 
     public void Update(TimeSpan ElapsedTime)
@@ -103,6 +115,16 @@ public class ContentManager
         AdditiveBlending.UpdateAngles();
         Game.Player.AnimatedSprite.Update();
         Game.Player.ParticleSystem.Update(Game.Player.Position, Game.Player.Rotation);
+        HandleCollision(Game.Entities);
+    }
+
+    private void HandleCollision(List<Entity> gameEntities)
+    {
+        foreach (var entity in Game.Entities)
+        {
+            if (Game.Player.BoundingCircle.Colliding(entity.BoundingCircle))
+                Game.Menu.Pause = true;
+        }
     }
 }
 

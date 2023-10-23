@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -16,6 +17,7 @@ namespace Pong;
 
 public class Game1 : Game
 {
+    public List<Entity> Entities { get; set; }
     public Player Player { get; set; }
     public LevelBase Level { get; set; }
     public int? ScreenWidth => _graphics?.PreferredBackBufferWidth;
@@ -45,8 +47,12 @@ public class Game1 : Game
         // TODO: Add your initialization logic here
         _content = new ContentManager(this);
         _inputManager = new InputManager(this);
+        Entities = new();
 
         Player = new Player(new Vector2((float)(ScreenWidth / 2), (float)(ScreenHeight / 2)));
+
+        Entities.Add(new Entity(new Vector2((float)ScreenWidth-64,(float)ScreenHeight-64),"textures/ball"));
+        Entities.Add(new Entity(new Vector2(0,0),"textures/ball"));
         Level = new Level1();
 
         base.Initialize();
